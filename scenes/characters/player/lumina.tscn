@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cuqnvp3bpksl6"]
+
+[ext_resource type="Script" path="res://scripts/characters/player/lumina.gd" id="1_s6g4p"]
+[ext_resource type="Script" path="res://scripts/characters/player/lumina_movement.gd" id="2_7t4te"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y81pg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1c2ro"]
+
+[node name="Lumina" type="CharacterBody3D"]
+script = ExtResource("1_s6g4p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y81pg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1c2ro")
+
+[node name="LuminaMovement" type="Node" parent="."]
+script = ExtResource("2_7t4te")

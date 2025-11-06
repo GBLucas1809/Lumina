@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://ce8mbn23c0p3x"]
+
+[ext_resource type="PackedScene" uid="uid://cuqnvp3bpksl6" path="res://scenes/characters/player/lumina.tscn" id="1_ohas7"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_vfjo7"]
+
+[sub_resource type="Sky" id="Sky_h48di"]
+sky_material = SubResource("PhysicalSkyMaterial_vfjo7")
+
+[sub_resource type="Environment" id="Environment_pb8ja"]
+background_mode = 2
+sky = SubResource("Sky_h48di")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kqgng"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dav5b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62fct"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xwry0"]
+size = Vector3(1.5, 0.2, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1fv16"]
+size = Vector3(1.5, 0.2, 1.5)
+
+[node name="TestEnvironment" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pb8ja")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 5, 10)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_kqgng")
+surface_material_override/0 = SubResource("StandardMaterial3D_dav5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_62fct")
+
+[node name="Platform1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform1"]
+mesh = SubResource("BoxMesh_xwry0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform1"]
+shape = SubResource("BoxShape3D_1fv16")
+
+[node name="Platform2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform2"]
+mesh = SubResource("BoxMesh_xwry0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform2"]
+shape = SubResource("BoxShape3D_1fv16")
+
+[node name="Platform3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform3"]
+mesh = SubResource("BoxMesh_xwry0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform3"]
+shape = SubResource("BoxShape3D_1fv16")
+
+[node name="Lumina" parent="." instance=ExtResource("1_ohas7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
