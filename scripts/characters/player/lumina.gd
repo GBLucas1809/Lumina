@@ -3,7 +3,12 @@ extends CharacterBody3D
 # Reference to our movement component
 @onready var movement_component: LuminaMovement = $LuminaMovement
 
+# @onready var div_attack_mode: divAttackMode = $divAttackMode
+var div_attack_mode = preload("res://scripts/mechanics/divergence/attack_mode.gd")
+var div_defense_mode = preload("res://scripts/mechanics/divergence/defense_mode.gd")
+
 func _ready():
+
 	# Check if movement component exists
 	if not movement_component:
 		push_error("LuminaMovement component not found!")
@@ -21,6 +26,17 @@ func _physics_process(delta):
 	
 	# Move the character (this applies the velocity calculated by movement component)
 	move_and_slide()
+
+# note: delta is the time between two frames
+func _process(delta):
+	if Input.is_action_just_pressed("attack"):
+		div_attack_mode.do_attack()
+		print("Attack activated: " + str(div_attack_mode.is_mode_on))
+
+	if Input.is_action_just_pressed("defend"):
+		div_defense_mode.defend()
+		print("Defense activated: " + str(div_defense_mode.is_mode_on))
+
 
 # Signal handlers for movement events
 func _on_started_floating():
