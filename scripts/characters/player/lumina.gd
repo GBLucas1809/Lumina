@@ -53,3 +53,9 @@ func is_in_water() -> bool:
 # Example: If you need to cancel floating from another system (like taking damage)
 func cancel_floating():
 	movement_component.cancel_floating()
+	
+func _on_started_glowing():
+	print("Lumina started glowing!")
+
+func _on_stopped_glowing():
+	print("Lumina stopped glowing!")

@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=3 uid="uid://dnti4wtquvsof"]
+
+[ext_resource type="PackedScene" uid="uid://cuqnvp3bpksl6" path="res://scenes/characters/player/lumina.tscn" id="1_a01pw"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kqgng"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dav5b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62fct"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xwry0"]
+size = Vector3(1.5, 0.2, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1fv16"]
+size = Vector3(1.5, 0.2, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a01pw"]
+size = Vector3(1, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8codl"]
+size = Vector3(1, 5, 1)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_vfjo7"]
+
+[sub_resource type="Sky" id="Sky_h48di"]
+sky_material = SubResource("PhysicalSkyMaterial_vfjo7")
+
+[sub_resource type="Environment" id="Environment_pb8ja"]
+background_mode = 2
+sky = SubResource("Sky_h48di")
+
+[node name="TestEnvironment" type="Node3D"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Environment"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground"]
+mesh = SubResource("PlaneMesh_kqgng")
+surface_material_override/0 = SubResource("StandardMaterial3D_dav5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground"]
+shape = SubResource("BoxShape3D_62fct")
+
+[node name="Platform1" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Platform1"]
+mesh = SubResource("BoxMesh_xwry0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform1"]
+shape = SubResource("BoxShape3D_1fv16")
+
+[node name="Platform2" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Platform2"]
+mesh = SubResource("BoxMesh_xwry0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform2"]
+shape = SubResource("BoxShape3D_1fv16")
+
+[node name="Platform3" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Platform3"]
+mesh = SubResource("BoxMesh_xwry0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Platform3"]
+shape = SubResource("BoxShape3D_1fv16")
+
+[node name="Wall" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2563086, 2.447587, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Wall"]
+mesh = SubResource("BoxMesh_a01pw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Wall"]
+shape = SubResource("BoxShape3D_8codl")
+
+[node name="Characters" type="Node" parent="."]
+
+[node name="Lumina" parent="Characters" instance=ExtResource("1_a01pw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="LuminaMovement" parent="Characters/Lumina" index="3"]
+friction = 30.0
+jump_velocity = 10.0
+gravity = 80.0
+float_slow_fall_gravity = 8.0
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Systems"]
+transform = Transform3D(1, 0, 0, 0, 0.36723194, 0.9301294, 0, -0.9301294, 0.36723185, 0, 8.230137, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="Systems"]
+transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881898, 0, -0.25881898, 0.9659259, 0, 3.766089, 8.510157)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Systems"]
+environment = SubResource("Environment_pb8ja")
+
+[connection signal="timeout" from="Characters/Lumina/LuminaAbilities/GlowCooldown" to="Characters/Lumina/LuminaAbilities" method="_on_glow_cooldown_timeout"]
+
+[editable path="Characters/Lumina"]

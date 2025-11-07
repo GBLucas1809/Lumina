@@ -79,7 +79,7 @@ func check_water_state():
 func get_movement_direction() -> Vector3:
 	var input_dir = Vector3.ZERO
 	input_dir.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	input_dir.z = Input.get_action_strength("move_back") - Input.get_action_strength("move_forward")
+	#input_dir.z = Input.get_action_strength("move_back") - Input.get_action_strength("move_forward")
 	return input_dir.normalized()
 
 func handle_movement(direction: Vector3, delta: float) -> void:
@@ -97,6 +97,12 @@ func handle_movement(direction: Vector3, delta: float) -> void:
 	# Apply horizontal velocity
 	character_body.velocity.x = horizontal_velocity.x
 	character_body.velocity.z = horizontal_velocity.z
+	
+	if character_body.velocity.x > 0:
+		character_body.rotation.y = 2 * PI
+	elif character_body.velocity.x < 0:
+		character_body.rotation.y = PI
+	
 
 func handle_gravity(delta: float) -> void:
 	if not character_body.is_on_floor():
