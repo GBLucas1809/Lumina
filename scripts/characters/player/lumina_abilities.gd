@@ -7,6 +7,9 @@ var hurt_box: Area3D
 
 @onready var cooldownTimer = $GlowCooldown
 
+@onready var div_attack_mode = preload("res://scripts/mechanics/divergence/attack_mode.gd")
+@onready var div_defense_mode = preload("res://scripts/mechanics/divergence/defense_mode.gd")
+
 var is_glowing := false
 var is_on_cooldown := false
 
@@ -27,6 +30,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 
+	# Glowing 
 	if Input.is_action_pressed("glow") and !is_glowing and !is_on_cooldown:
 		character_body._on_started_glowing()
 		is_glowing = true
@@ -45,6 +49,22 @@ func _process(delta: float) -> void:
 		character_body.set_collision_mask_value(2, true)
 		cooldownTimer.start()
 
+	# Divergence
+	var attacked = Input.is_action_just_pressed("attack") 
+
+	var defended = Input.is_action_pressed("defend")
+
+	if attacked and defended:
+		print("You can't attack and defend at the same time!")
+		
+	elif attacked:
+		div_attack_mode.do_attack()
+		print("Attack activated: " + str(div_attack_mode.is_mode_on))
+
+	elif defended:
+		div_defense_mode.defend()
+		print("Defense activated: " + str(div_defense_mode.is_mode_on))
+	
 
 func _on_glow_cooldown_timeout() -> void:
 	is_on_cooldown = false
