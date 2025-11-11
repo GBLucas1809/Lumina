@@ -1,20 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuqnvp3bpksl6"]
+[gd_scene load_steps=8 format=3 uid="uid://cuqnvp3bpksl6"]
 
-[ext_resource type="Script" path="res://scripts/characters/player/lumina.gd" id="1_s6g4p"]
-[ext_resource type="Script" path="res://scripts/characters/player/lumina_movement.gd" id="2_7t4te"]
+[ext_resource type="Script" uid="uid://qivbesvur6mi" path="res://scripts/characters/player/lumina.gd" id="1_s6g4p"]
+[ext_resource type="Script" uid="uid://g8hj1vfhxlhs" path="res://scripts/characters/player/lumina_movement.gd" id="2_7t4te"]
+[ext_resource type="Script" uid="uid://dufhut6fu3fh7" path="res://scripts/mechanics/self_frequency.gd" id="3_gh867"]
+[ext_resource type="Script" uid="uid://5egaojpmrruf" path="res://scripts/characters/player/lumina_hitbox.gd" id="4_6t2wn"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y81pg"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t2wn"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1c2ro"]
 
-[node name="Lumina" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y81pg"]
+
+[node name="Lumina" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_s6g4p")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_y81pg")
+[node name="LuminaMovement" type="Node" parent="."]
+script = ExtResource("2_7t4te")
+
+[node name="SelfFrequency" type="Node" parent="."]
+script = ExtResource("3_gh867")
+
+[node name="Hitbox" type="Area3D" parent="."]
+script = ExtResource("4_6t2wn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("CapsuleShape3D_6t2wn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_1c2ro")
 
-[node name="LuminaMovement" type="Node" parent="."]
-script = ExtResource("2_7t4te")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y81pg")
