@@ -2,11 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bmkhsdu1cht2j" path="res://scenes/system/hit_box.tscn" id="1_8codl"]
 [ext_resource type="PackedScene" uid="uid://cuqnvp3bpksl6" path="res://scenes/characters/player/lumina.tscn" id="1_a01pw"]
-<<<<<<< HEAD
 [ext_resource type="Script" uid="uid://bq5mjb5mbtwn4" path="res://scripts/utilities/countdown.gd" id="3_i01om"]
-=======
 [ext_resource type="Script" uid="uid://b4e6ctadhx0x7" path="res://scripts/camera/camera_follow.gd" id="3_i01om"]
->>>>>>> feature/movement_changes
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_kqgng"]
 size = Vector2(20, 20)
