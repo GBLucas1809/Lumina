@@ -100,7 +100,6 @@ shape = SubResource("BoxShape3D_8codl")
 [node name="Lumina" parent="Characters" instance=ExtResource("1_a01pw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-<<<<<<< HEAD
 [node name="LuminaMovement" parent="Characters/Lumina" index="4"]
 friction = 30.0
 jump_velocity = 10.0
@@ -113,8 +112,6 @@ shaded = true
 script = ExtResource("3_i01om")
 max_seconds = 5
 
-=======
->>>>>>> feature/movement_changes
 [node name="Systems" type="Node" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Systems" node_paths=PackedStringArray("target")]
