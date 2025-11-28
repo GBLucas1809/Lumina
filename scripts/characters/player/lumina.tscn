@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://cuqnvp3bpksl6"]
+
+[ext_resource type="Script" uid="uid://qivbesvur6mi" path="res://scripts/characters/player/lumina.gd" id="1_s6g4p"]
+[ext_resource type="PackedScene" uid="uid://b8l2ifwiwp83f" path="res://scenes/system/hurt_box.tscn" id="2_6t2wn"]
+[ext_resource type="Script" uid="uid://g8hj1vfhxlhs" path="res://scripts/characters/player/lumina_movement.gd" id="2_7t4te"]
+[ext_resource type="Script" uid="uid://b6fs4vr72lfu" path="res://scripts/characters/player/lumina_abilities.gd" id="3_gh867"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w54db"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y81pg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gh867"]
+emission = Color(0.99116415, 0.99116427, 0.99116415, 1)
+emission_energy_multiplier = 5.14
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1c2ro"]
+material = SubResource("StandardMaterial3D_gh867")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6t2wn"]
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 5.67
+
+[sub_resource type="BoxMesh" id="BoxMesh_ttmyw"]
+material = SubResource("StandardMaterial3D_6t2wn")
+
+[node name="Lumina" type="CharacterBody3D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_s6g4p")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_6t2wn")]
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_w54db")
+debug_color = Color(0.9734989, 0, 0.43693095, 0.41960785)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_y81pg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1c2ro")
+
+[node name="FaceMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.47592813, 0, 0, 0, 0.18887556, 0, 0, 0, 1, 0.5197169, 0.50958407, 0)
+mesh = SubResource("BoxMesh_ttmyw")
+
+[node name="LuminaMovement" type="Node" parent="."]
+script = ExtResource("2_7t4te")
+jump_velocity = 20.0
+gravity = 60.0
+
+[node name="LuminaAbilities" type="Node" parent="."]
+script = ExtResource("3_gh867")
+
+[node name="GlowCooldown" type="Timer" parent="LuminaAbilities"]
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]

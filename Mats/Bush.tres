@@ -1,0 +1,119 @@
+[gd_resource type="VisualShader" load_steps=10 format=3 uid="uid://cbjgk7h3oueoe"]
+
+[ext_resource type="Texture2D" uid="uid://dt27v34yuhuow" path="res://Textures/T_Bush_test.png" id="1_yymwq"]
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_hf87s"]
+output_port_for_preview = 0
+default_input_values = [0, Vector2(0, 0), 1, Vector2(1, 1), 2, Vector2(0.5, 0.5)]
+op_type = 1
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_cyfvi"]
+output_port_for_preview = 0
+default_input_values = [0, Vector2(0, 0), 1, Vector2(1, 1), 2, Vector2(0.5, 0.5)]
+op_type = 1
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_8ww8j"]
+parameter_name = "Tint_Int"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_6qx6f"]
+expanded_output_ports = [0]
+texture = ExtResource("1_yymwq")
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_tf6ht"]
+parameter_name = "rough"
+default_value_enabled = true
+default_value = 9.0
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_6ehoq"]
+output_port_for_preview = 0
+parameter_name = "color_tint"
+default_value_enabled = true
+default_value = Color(0.78125, 0.1373291, 0.45425892, 1)
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_sjs03"]
+parameter_name = "SS_Int"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_jtt1c"]
+output_port_for_preview = 0
+parameter_name = "SSColor"
+default_value_enabled = true
+default_value = Color(0.21104999, 0.63, 0.031500008, 1)
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform vec4 color_tint : source_color = vec4(0.781250, 0.137329, 0.454259, 1.000000);
+uniform sampler2D tex_frg_2;
+uniform float Tint_Int = 1.0;
+uniform float rough = 9.0;
+uniform vec4 SSColor : source_color = vec4(0.211050, 0.630000, 0.031500, 1.000000);
+uniform float SS_Int = 1.0;
+
+
+
+void fragment() {
+// ColorParameter:5
+	vec4 n_out5p0 = color_tint;
+
+
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, UV);
+	float n_out2p4 = n_out2p0.a;
+
+
+// FloatParameter:14
+	float n_out14p0 = Tint_Int;
+
+
+// Mix:11
+	vec2 n_out11p0 = mix(vec2(n_out5p0.xy), vec2(n_out2p0.xy), vec2(n_out14p0));
+
+
+// FloatParameter:3
+	float n_out3p0 = rough;
+
+
+// ColorParameter:9
+	vec4 n_out9p0 = SSColor;
+
+
+// FloatParameter:8
+	float n_out8p0 = SS_Int;
+
+
+// Mix:12
+	vec2 n_out12p0 = mix(vec2(n_out9p0.xy), vec2(n_out2p0.xy), vec2(n_out8p0));
+
+
+// Output:0
+	ALBEDO = vec3(n_out11p0, 0.0);
+	ALPHA = n_out2p4;
+	ROUGHNESS = n_out3p0;
+	BACKLIGHT = vec3(n_out12p0, 0.0);
+
+
+}
+"
+nodes/fragment/0/position = Vector2(780, 100)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_6qx6f")
+nodes/fragment/2/position = Vector2(-480, -180)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_tf6ht")
+nodes/fragment/3/position = Vector2(420, 240)
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorParameter_6ehoq")
+nodes/fragment/5/position = Vector2(-540, 200)
+nodes/fragment/8/node = SubResource("VisualShaderNodeFloatParameter_sjs03")
+nodes/fragment/8/position = Vector2(160, 780)
+nodes/fragment/9/node = SubResource("VisualShaderNodeColorParameter_jtt1c")
+nodes/fragment/9/position = Vector2(-120, 520)
+nodes/fragment/11/node = SubResource("VisualShaderNodeMix_hf87s")
+nodes/fragment/11/position = Vector2(240, 0)
+nodes/fragment/12/node = SubResource("VisualShaderNodeMix_cyfvi")
+nodes/fragment/12/position = Vector2(510.12927, 548.70807)
+nodes/fragment/14/node = SubResource("VisualShaderNodeFloatParameter_8ww8j")
+nodes/fragment/14/position = Vector2(-140, 240)
+nodes/fragment/connections = PackedInt32Array(2, 4, 0, 1, 3, 0, 0, 3, 11, 0, 0, 0, 14, 0, 11, 2, 2, 0, 11, 1, 5, 0, 11, 0, 8, 0, 12, 2, 9, 0, 12, 0, 2, 0, 12, 1, 12, 0, 0, 18)
