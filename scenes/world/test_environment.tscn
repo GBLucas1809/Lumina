@@ -1,5 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ce8mbn23c0p3x"]
 
+[ext_resource type="Script" uid="uid://b17cdrjvwbkea" path="res://scripts/camera/camera_effect.gd" id="1_4f05m"]
 [ext_resource type="PackedScene" uid="uid://cuqnvp3bpksl6" path="res://scenes/characters/player/lumina.tscn" id="1_ohas7"]
 [ext_resource type="PackedScene" uid="uid://dw0dp3j5udwfk" path="res://scenes/characters/enemies/enemy.tscn" id="2_b0sy8"]
 
@@ -37,6 +38,9 @@ shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 5, 10)
+
+[node name="CameraEffects" type="CanvasLayer" parent="Camera3D" groups=["camera_effects", "player"]]
+script = ExtResource("1_4f05m")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
