@@ -114,12 +114,15 @@ animations = [{
 }]
 
 [node name="enemy" type="CharacterBody3D" groups=["enemies"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 0)
-motion_mode = 1
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -5, 1, 0)
 slide_on_ceiling = false
 script = ExtResource("1_tqeym")
-player_path = NodePath(".")
-projectile_scene = ExtResource("2_blu3w")
+
+[node name="RangedAttack" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49317932, 0.5001929, 0)
+visible = false
+
+[node name="Projectile" parent="RangedAttack" instance=ExtResource("2_blu3w")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

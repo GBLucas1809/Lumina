@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://dnti4wtquvsof"]
+[gd_scene load_steps=16 format=3 uid="uid://dnti4wtquvsof"]
 
 [ext_resource type="PackedScene" uid="uid://bmkhsdu1cht2j" path="res://scenes/system/hit_box.tscn" id="1_8codl"]
 [ext_resource type="PackedScene" uid="uid://cuqnvp3bpksl6" path="res://scenes/characters/player/lumina.tscn" id="1_a01pw"]
 [ext_resource type="Script" uid="uid://b4e6ctadhx0x7" path="res://scripts/camera/camera_follow.gd" id="3_i01om"]
+[ext_resource type="PackedScene" uid="uid://dw0dp3j5udwfk" path="res://scenes/characters/enemies/enemy.tscn" id="3_lwsrk"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_kqgng"]
 size = Vector2(20, 20)
@@ -97,21 +98,18 @@ shape = SubResource("BoxShape3D_8codl")
 [node name="Characters" type="Node" parent="."]
 
 [node name="Lumina" parent="Characters" instance=ExtResource("1_a01pw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2331034, 1.0500002, -0.8371086)
 
-[node name="CollisionShape3D" parent="Characters/Lumina" index="1"]
-debug_color = Color(0.9734989, 0, 0.43693095, 0.41960785)
-
-[node name="def_mode_timer" type="Label3D" parent="Characters/Lumina"]
-transform = Transform3D(0.99962837, 0, -0.027258515, 0, 1, 0, 0.027258515, 0, 0.99962837, 0.023649484, 1.4278381, 1.125812)
-shaded = true
+[node name="enemy" parent="Characters" instance=ExtResource("3_lwsrk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8297486, 2.8331645, -0.013077021)
+player_path = NodePath("../Lumina")
 
 [node name="Systems" type="Node" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Systems" node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881898, 0, -0.25881898, 0.9659259, 0, 3.766089, 8.510157)
 script = ExtResource("3_i01om")
-target = NodePath("../../Characters/Lumina")
+target = NodePath("")
 offset = Vector3(0, 3, 10)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Systems"]
@@ -122,5 +120,3 @@ shadow_enabled = true
 environment = SubResource("Environment_pb8ja")
 
 [editable path="Environment/Wall/HitBox"]
-[editable path="Characters/Lumina"]
-[editable path="Characters/Lumina/HurtBox"]

@@ -83,3 +83,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="enemy" parent="." instance=ExtResource("2_b0sy8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.167251, 2.0051215, 0.101126075)
+speed = 2.0
+player_path = NodePath("../Lumina")

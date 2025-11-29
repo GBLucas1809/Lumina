@@ -1,19 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://dknnidc1vod4p"]
+[gd_scene load_steps=8 format=3 uid="uid://dknnidc1vod4p"]
 
 [ext_resource type="Script" uid="uid://dc6mxx6ssvvt" path="res://scripts/characters/enemies/projectile.gd" id="1_38bu1"]
+[ext_resource type="Texture2D" uid="uid://cphxx64pey810" path="res://sprites/enemies/Corrupted Benignity Sprite/attack 1/projectile/corrupted_frequency0000.png" id="2_7uwqq"]
+[ext_resource type="Texture2D" uid="uid://cq70tnfkdy6hi" path="res://sprites/enemies/Corrupted Benignity Sprite/attack 1/projectile/corrupted_frequency0001.png" id="3_blfh2"]
+[ext_resource type="Texture2D" uid="uid://du4hrqi21tajy" path="res://sprites/enemies/Corrupted Benignity Sprite/attack 1/projectile/corrupted_frequency0002.png" id="4_rlfb5"]
+[ext_resource type="Texture2D" uid="uid://dm513yaegee17" path="res://sprites/enemies/Corrupted Benignity Sprite/attack 1/projectile/corrupted_frequency0003.png" id="5_bluro"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_xg2yx"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3x4q6"]
+radius = 1.8564453
+height = 3.7128906
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_38bu1"]
-radius = 0.6
+[sub_resource type="SpriteFrames" id="SpriteFrames_cigyf"]
+animations = [{
+"frames": [{
+"duration": 0.31,
+"texture": ExtResource("2_7uwqq")
+}, {
+"duration": 0.31,
+"texture": ExtResource("3_blfh2")
+}, {
+"duration": 0.31,
+"texture": ExtResource("4_rlfb5")
+}, {
+"duration": 0.31,
+"texture": ExtResource("5_bluro")
+}],
+"loop": true,
+"name": &"corrupted_frequency",
+"speed": 5.0
+}]
 
 [node name="Projectile" type="Area3D"]
 script = ExtResource("1_38bu1")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_xg2yx")
+[node name="attack_colision" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.38378394, 0, 0, 0, 0.2557234, 0, 0, 0, -7.903318, -0.06800008, 0.009901226, -0.0019197464)
+shape = SubResource("CapsuleShape3D_3x4q6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_38bu1")
+[node name="attack_animation" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.95518106, 0, 0, 0, 0.6134318, 0, 0, 0, 1, -4.600779, 0, 0)
+flip_h = true
+pixel_size = 0.005
+sprite_frames = SubResource("SpriteFrames_cigyf")
+animation = &"corrupted_frequency"
+frame_progress = 0.6111492
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
